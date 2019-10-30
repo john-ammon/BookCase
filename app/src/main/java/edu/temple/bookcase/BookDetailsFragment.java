@@ -24,8 +24,8 @@ public class BookDetailsFragment extends Fragment {
         return bdf;
     }
 
-    public void getBook(String name) {
-        tv.setText(name);
+    public void displayBook(String title) {
+        tv.setText(title);
     }
 
     @Override
@@ -39,9 +39,9 @@ public class BookDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        tv = (TextView) inflater.inflate(R.layout.fragment_book_details, container, false);
+        tv = (TextView) inflater.inflate(R.layout.fragment_details, container, false);
 
-        if(title != null) {getBook(title);}
+        if(title != null) {displayBook(title);}
 
         return tv;
     }
