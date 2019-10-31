@@ -17,7 +17,6 @@ public class BookDetailsFragment extends Fragment {
     public static BookDetailsFragment newInstance(String title) {
         BookDetailsFragment bdf = new BookDetailsFragment();
         Bundle bundle = new Bundle();
-
         bundle.putString("book", title);
         bdf.setArguments(bundle);
 

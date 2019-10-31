@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements BookListFragment.OnFragmentInteractionListener {
 
     BookDetailsFragment bdf;
+    Boolean twoFragment;
     ArrayList<String> books = new ArrayList<>();
 
     @Override
@@ -20,13 +21,20 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         setContentView(R.layout.activity_main);
         Resources res = getResources();
         books.addAll(Arrays.asList(res.getStringArray(R.array.book_array)));
-        Fragment bookFragment = getSupportFragmentManager().findFragmentById(R.id.vpFragment);
+        twoFragment = (findViewById(R.id.detailFragment) != null);
 
-        if(bookFragment == null) {
+        if(twoFragment == false) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(null)
-                    .add(R.id.vpFragment, new ViewPagerFragment())
+                    .add(R.id.listFragment, new ViewPagerFragment())
+                    .commit();
+        } else {
+            BookListFragment blf = BookListFragment.newInstance(books);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .add(R.id.listFragment, blf)
                     .commit();
         }
     }

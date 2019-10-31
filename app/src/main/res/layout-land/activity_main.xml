@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/vpFragment"
-        android:layout_width="125dp"
+        android:id="@+id/listFragment"
+        android:layout_width="383dp"
         android:layout_height="match_parent">
 
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/bdFragment"
-        android:layout_width="397dp"
-        android:layout_height="103dp">
+        android:id="@+id/detailFragment"
+        android:layout_width="346dp"
+        android:layout_height="match_parent">
 
     </FrameLayout>
+
 </LinearLayout>
