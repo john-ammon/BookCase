@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/ViewPager"
+    <FrameLayout
+        android:id="@+id/vpFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="188dp"
-        tools:layout_editor_absoluteY="247dp" />
+        tools:layout_editor_absoluteX="199dp"
+        tools:layout_editor_absoluteY="357dp">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

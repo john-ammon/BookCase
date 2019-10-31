@@ -14,7 +14,7 @@ public class BookDetailsFragment extends Fragment {
 
     public BookDetailsFragment() {}
 
-    public static BookDetailsFragment newFragment(String title) {
+    public static BookDetailsFragment newInstance(String title) {
         BookDetailsFragment bdf = new BookDetailsFragment();
         Bundle bundle = new Bundle();
 
@@ -26,6 +26,7 @@ public class BookDetailsFragment extends Fragment {
 
     public void displayBook(String title) {
         tv.setText(title);
+        tv.setTextSize(25);
     }
 
     @Override

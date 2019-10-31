@@ -3,4 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/vpFragment"
+        android:layout_width="125dp"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bdFragment"
+        android:layout_width="397dp"
+        android:layout_height="103dp">
+
+    </FrameLayout>
 </LinearLayout>
