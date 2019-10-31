@@ -25,7 +25,7 @@ public class BookDetailsFragment extends Fragment {
 
     public void displayBook(String title) {
         tv.setText(title);
-        tv.setTextSize(25);
+        tv.setTextSize(35);
     }
 
     @Override

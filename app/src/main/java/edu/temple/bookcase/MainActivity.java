@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         books.addAll(Arrays.asList(res.getStringArray(R.array.book_array)));
         twoFragment = (findViewById(R.id.detailFragment) != null);
 
-        if(twoFragment == false) {
+        if(!twoFragment) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(null)
@@ -47,5 +47,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         Bundle detailsBook = new Bundle();
         detailsBook.putString("book", title);
         bdf.setArguments(detailsBook);
+
+        if(twoFragment) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.detailFragment, bdf)
+                    .commit();
+        }
     }
 }
