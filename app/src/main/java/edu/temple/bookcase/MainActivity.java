@@ -27,9 +27,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(null)
-                    .add(R.id.listFragment, new ViewPagerFragment())
+                    .replace(R.id.listFragment, new ViewPagerFragment())
                     .commit();
         } else {
+            bdf = new BookDetailsFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.detailFragment, bdf)
+                    .commit();
             BookListFragment blf = BookListFragment.newInstance(books);
             getSupportFragmentManager()
                     .beginTransaction()
@@ -42,18 +48,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     @Override
     public void onFragmentInteraction(int position) {
         String title = books.get(position);
-        bdf = new BookDetailsFragment();
+        bdf.displayBook(title);
 
-        Bundle detailsBook = new Bundle();
-        detailsBook.putString("book", title);
-        bdf.setArguments(detailsBook);
-
-        if(twoFragment) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.detailFragment, bdf)
-                    .commit();
-        }
+        
     }
 }
