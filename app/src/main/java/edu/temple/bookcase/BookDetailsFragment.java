@@ -9,22 +9,22 @@ import androidx.fragment.app.Fragment;
 
 public class BookDetailsFragment extends Fragment {
 
-    String title;
+    Book book;
     TextView tv;
 
     public BookDetailsFragment() {}
 
-    public static BookDetailsFragment newInstance(String title) {
+    public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment bdf = new BookDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("book", title);
+        bundle.putParcelable("book", book);
         bdf.setArguments(bundle);
 
         return bdf;
     }
 
-    public void displayBook(String title) {
-        tv.setText(title);
+    public void displayBook(Book book) {
+        tv.setText(book.title + "\n" + book.author + "\n" + book.published);
         tv.setTextSize(35);
     }
 
@@ -33,7 +33,7 @@ public class BookDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            title = getArguments().getString("book");
+            book = getArguments().getParcelable("book");
         }
     }
 
@@ -41,7 +41,7 @@ public class BookDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tv = (TextView) inflater.inflate(R.layout.fragment_details, container, false);
 
-        if(title != null) {displayBook(title);}
+        if(book != null) {displayBook(book);}
 
         return tv;
     }

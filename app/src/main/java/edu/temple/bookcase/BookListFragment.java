@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class BookListFragment extends Fragment {
 
-    ArrayList<String> books;
+    ArrayList<Book> books;
     private OnFragmentInteractionListener fragmentParent;
 
     public BookListFragment() {
@@ -24,10 +24,10 @@ public class BookListFragment extends Fragment {
     }
 
 
-    public static BookListFragment newInstance(ArrayList<String> books) {
+    public static BookListFragment newInstance(ArrayList<Book> books) {
         BookListFragment blf = new BookListFragment();
         Bundle args = new Bundle();
-        args.putStringArrayList("books", books);
+        args.putParcelableArrayList("books", books);
         blf.setArguments(args);
 
         return blf;
@@ -36,13 +36,17 @@ public class BookListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) { books = getArguments().getStringArrayList("books"); }
+        if (getArguments() != null) { books = getArguments().getParcelableArrayList("books"); }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ListView lv = (ListView) inflater.inflate(R.layout.fragment_list,container,false);
-        lv.setAdapter(new ArrayAdapter<>((Context) fragmentParent, android.R.layout.simple_list_item_1,books));
+        ArrayList<String> titles = new ArrayList<>();
+        for(int i = 0; i< books.size(); i++) {
+            titles.add(books.get(i).title);
+        }
+        lv.setAdapter(new ArrayAdapter<>((Context) fragmentParent, android.R.layout.simple_list_item_1, titles));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

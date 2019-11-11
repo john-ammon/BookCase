@@ -11,10 +11,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class ViewPagerFragment extends Fragment {
 
     ViewPager vp;
     PagerAdapter pa;
+    ArrayList<Book> books;
 
     public ViewPagerFragment() {}
     public static ViewPagerFragment newInstance() {return new ViewPagerFragment();}
@@ -26,6 +30,7 @@ public class ViewPagerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        books = getArguments().getParcelableArrayList("BookList");
         View v = inflater.inflate(R.layout.fragment_pager, container,false);
         vp = v.findViewById(R.id.bookPager);
         pa = new vpAdapter(getChildFragmentManager());
@@ -41,26 +46,15 @@ public class ViewPagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                    return BookDetailsFragment.newInstance(getResources().getStringArray(R.array.book_array)[position]);
-                default:
-                    return null;
+            if(position < books.size()) {
+                return BookDetailsFragment.newInstance(books.get(position));
+            } else {
+                return null;
             }
         }
 
         public int getCount() {
-            return getResources().getStringArray(R.array.book_array).length;
+            return books.size();
         }
     }
 }
