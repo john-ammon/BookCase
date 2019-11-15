@@ -30,28 +30,34 @@
     <LinearLayout
         android:id="@+id/fragments"
         android:layout_width="match_parent"
-        android:layout_height="359dp"
+        android:layout_height="740dp"
         android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/listFragment"
             android:layout_width="270dp"
-            android:layout_height="wrap_content">
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/detailFragment"
-            android:layout_width="253dp"
             android:layout_height="match_parent">
 
         </FrameLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@android:color/transparent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/detailFragment"
+                android:layout_width="571dp"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@android:color/transparent" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

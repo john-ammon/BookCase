@@ -12,4 +12,5 @@
         <item>The Great Gatsby</item>
         <item>Moby Dick</item>
     </string-array>
+    <string name="button">Search</string>
 </resources>

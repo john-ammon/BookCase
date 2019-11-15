@@ -42,6 +42,7 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ListView lv = (ListView) inflater.inflate(R.layout.fragment_list,container,false);
+        books = getArguments().getParcelableArrayList("BookList");
         ArrayList<String> titles = new ArrayList<>();
         for(int i = 0; i< books.size(); i++) {
             titles.add(books.get(i).title);
