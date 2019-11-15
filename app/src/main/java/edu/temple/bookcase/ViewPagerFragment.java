@@ -21,7 +21,6 @@ public class ViewPagerFragment extends Fragment {
     ArrayList<Book> books;
 
     public ViewPagerFragment() {}
-    public static ViewPagerFragment newInstance() {return new ViewPagerFragment();}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,5 +55,9 @@ public class ViewPagerFragment extends Fragment {
         public int getCount() {
             return books.size();
         }
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
     }
 }

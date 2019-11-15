@@ -23,20 +23,11 @@ public class BookListFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    public static BookListFragment newInstance(ArrayList<Book> books) {
-        BookListFragment blf = new BookListFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("books", books);
-        blf.setArguments(args);
-
-        return blf;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) { books = getArguments().getParcelableArrayList("books"); }
+        setRetainInstance(true);
     }
 
     @Override
@@ -59,12 +50,6 @@ public class BookListFragment extends Fragment {
     }
 
 
-    public void onButtonPressed(int position) {
-        if (fragmentParent != null) {
-            fragmentParent.onFragmentInteraction(position);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,5 +69,9 @@ public class BookListFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(int position);
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
     }
 }

@@ -1,7 +1,6 @@
 package edu.temple.bookcase;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -11,23 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.OnFragmentInteractionListener {
 
-    BookDetailsFragment bdf;
-    BookListFragment blf;
-    ViewPagerFragment vpf;
+    BookDetailsFragment bdf = new BookDetailsFragment();
+    BookListFragment blf = new BookListFragment();
+    ViewPagerFragment vpf = new ViewPagerFragment();
     Boolean twoFragment;
-    ArrayList<Book> books = new ArrayList<>();
+    ArrayList<Book> books;
     Bundle bundle;
     String search = "";
 
@@ -35,24 +32,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        vpf = new ViewPagerFragment();
-        bdf = new BookDetailsFragment();
-        blf = new BookListFragment();
-
-        if(books.isEmpty()) {
-            getBooksFromAPI();
-        }
-
+        getBooksFromAPI();
+        
         //Bundle with list of books
         bundle = new Bundle();
         bundle.putParcelableArrayList("BookList", books);
-        //Create fragments and bundle books
         vpf.setArguments(bundle);
         bdf.setArguments(bundle);
         blf.setArguments(bundle);
-        //Display the fragments
-        displayFragments();
 
+        displayFragments();
 
         final Button button = findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -62,10 +51,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 getBooksFromAPI();
                 bundle.putParcelableArrayList("BookList", books);
                 //Create fragments and bundle books
+                blf = new BookListFragment();
+                bdf = new BookDetailsFragment();
                 vpf = new ViewPagerFragment();
                 vpf.setArguments(bundle);
-                bdf = new BookDetailsFragment();
                 bdf.setArguments(bundle);
+                blf.setArguments(bundle);
+                if(twoFragment) {
+                    ImageView iv = findViewById(R.id.imageView);
+                    iv.setImageResource(android.R.color.transparent);
+                }
                 displayFragments();
             }
         });
@@ -73,8 +68,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void onFragmentInteraction(int position) {
+        books = blf.getBooks();
         bdf.displayBook(books.get(position));
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
+        new getCoverImage((ImageView) findViewById(R.id.imageView))
                 .execute(books.get(position).coverURL);
     }
 
@@ -149,11 +145,11 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         catch (Exception e) { System.out.println(e); }
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class getCoverImage extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.imageView = bmImage;
+        public getCoverImage(ImageView iv) {
+            this.imageView = iv;
         }
 
         protected Bitmap doInBackground(String... urls) {
