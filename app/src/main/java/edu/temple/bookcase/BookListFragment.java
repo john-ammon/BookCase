@@ -26,8 +26,8 @@ public class BookListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) { books = getArguments().getParcelableArrayList("books"); }
         setRetainInstance(true);
+        if (getArguments() != null) { books = getArguments().getParcelableArrayList("books"); }
     }
 
     @Override

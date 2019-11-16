@@ -1,6 +1,9 @@
 package edu.temple.bookcase;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -20,10 +23,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.OnFragmentInteractionListener {
 
-    BookDetailsFragment bdf = new BookDetailsFragment();
-    BookListFragment blf = new BookListFragment();
-    ViewPagerFragment vpf = new ViewPagerFragment();
+    BookDetailsFragment bdf;
+    BookListFragment blf;
+    ViewPagerFragment vpf;
+    FragmentManager fragmentManager;
     Boolean twoFragment;
+    Boolean tablet;
     ArrayList<Book> books;
     Bundle bundle;
     String search = "";
@@ -33,15 +38,53 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getBooksFromAPI();
-        
-        //Bundle with list of books
+        tablet = getResources().getBoolean(R.bool.isTablet);
+        fragmentManager = getSupportFragmentManager();
+        twoFragment = (findViewById(R.id.detailFragment) != null);
         bundle = new Bundle();
-        bundle.putParcelableArrayList("BookList", books);
-        vpf.setArguments(bundle);
-        bdf.setArguments(bundle);
-        blf.setArguments(bundle);
-
-        displayFragments();
+        //Bundle with list of books
+        if(fragmentManager.findFragmentById(R.id.listFragment) == null) {
+            bdf = new BookDetailsFragment();
+            blf = new BookListFragment();
+            vpf = new ViewPagerFragment();
+            bundle.putParcelableArrayList("BookList", books);
+            vpf.setArguments(bundle);
+            bdf.setArguments(bundle);
+            blf.setArguments(bundle);
+            displayFragments();
+        } else if (!twoFragment){
+            blf = (BookListFragment) fragmentManager.findFragmentById(R.id.listFragment);
+            bundle.putParcelableArrayList("BookList", blf.getBooks());
+            vpf = new ViewPagerFragment();
+            vpf.setArguments(bundle);
+            fragmentManager
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.listFragment, vpf)
+                    .commit();
+        } else {
+            if(!tablet) {
+                vpf = (ViewPagerFragment) fragmentManager.findFragmentById(R.id.listFragment);
+                bundle.putParcelableArrayList("BookList", vpf.getBooks());
+                blf = new BookListFragment();
+                bdf = new BookDetailsFragment();
+                blf.setArguments(bundle);
+                bdf.setArguments(bundle);
+                fragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.detailFragment, bdf)
+                        .commit();
+                fragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.listFragment, blf)
+                        .commit();
+            } else {
+                blf = (BookListFragment) fragmentManager.findFragmentById(R.id.listFragment);
+                bdf = (BookDetailsFragment) fragmentManager.findFragmentById(R.id.detailFragment);
+            }
+        }
 
         final Button button = findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -75,21 +118,19 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     public void displayFragments() {
-        //check if one or two fragments are being displayed
-        twoFragment = (findViewById(R.id.detailFragment) != null);
         if(!twoFragment) {
-            getSupportFragmentManager()
+            fragmentManager
                     .beginTransaction()
                     .addToBackStack(null)
                     .replace(R.id.listFragment, vpf)
                     .commit();
         } else {
-            getSupportFragmentManager()
+            fragmentManager
                     .beginTransaction()
                     .addToBackStack(null)
                     .replace(R.id.detailFragment, bdf)
                     .commit();
-            getSupportFragmentManager()
+            fragmentManager
                     .beginTransaction()
                     .addToBackStack(null)
                     .replace(R.id.listFragment, blf)

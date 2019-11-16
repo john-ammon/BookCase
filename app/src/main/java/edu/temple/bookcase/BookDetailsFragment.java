@@ -31,7 +31,6 @@ public class BookDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             book = getArguments().getParcelable("book");
         }
