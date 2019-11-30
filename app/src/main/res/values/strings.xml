@@ -13,4 +13,9 @@
         <item>Moby Dick</item>
     </string-array>
     <string name="button">Search</string>
+    <string name="play">Play</string>
+    <string name="playing">Now Playing</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="nothing">Nothing Playing</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         fragmentManager = getSupportFragmentManager();
         twoFragment = (findViewById(R.id.detailFragment) != null);
         bundle = new Bundle();
-        //Bundle with list of books
+
+        //determine orientation and display fragments
         if(fragmentManager.findFragmentById(R.id.listFragment) == null) {
             bdf = new BookDetailsFragment();
             blf = new BookListFragment();
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
         }
 
+        //search button
         final Button button = findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -107,6 +110,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 displayFragments();
             }
         });
+
+        /*//play button
+        final Button playButton = findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });*/
     }
 
     @Override
@@ -115,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         bdf.displayBook(books.get(position));
         new getCoverImage((ImageView) findViewById(R.id.imageView))
                 .execute(books.get(position).coverURL);
+        Button playButton = findViewById(R.id.playButton);
+        playButton.setVisibility(View.VISIBLE);
     }
 
     public void displayFragments() {
@@ -173,7 +186,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                         String author = jsonobject.getString("author");
                         int published = jsonobject.getInt("published");
                         String coverURL = jsonobject.getString("cover_url");
-                        Book newBook = new Book(id, title, author, published, coverURL);
+                        int duration = jsonobject.getInt("duration");
+                        Book newBook = new Book(id, title, author, published, coverURL, duration);
                         books.add(newBook);
                     }
                 } catch (Exception e){
